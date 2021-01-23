@@ -1,14 +1,25 @@
 using System;
+using FluentAssertions;
+using SE.MineField.Interfaces;
 using Xunit;
 
 namespace SE.MineField.Tests
 {
-    public class UnitTest1
+    public class GameBoardTests
     {
-        [Fact]
-        public void Test1()
-        {
+        private IGameBoard _gameBoard;
 
+        public GameBoardTests()
+        {
+            _gameBoard = new GameBoard();
+        }
+
+        [Fact] 
+        public void WhenGameboardIsGenerated_ThenNumberOfSquaresGeneratedEqualsSquareOfSize()
+        {
+            var squaresList = _gameBoard.Generate(4);
+
+            squaresList.Should().HaveCount(24);
         }
     }
 }

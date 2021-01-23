@@ -19,7 +19,7 @@ namespace SE.MineField.Tests
         {
             var squaresList = _gameBoard.Generate(4);
 
-            squaresList.Should().HaveCount(24);
+            squaresList.Should().HaveCount(16);
         }
     }
 }

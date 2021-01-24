@@ -21,6 +21,7 @@ namespace SE.MineField
 
             _board = new GameBoard()
             {
+                Size = size,
                 Board = GenerateMines(size),
                 YLabels = GenerateLabels(size),
                 XLabels = GenerateLabels(size, true)

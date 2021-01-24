@@ -20,6 +20,7 @@ namespace SE.MineField.Tests
             _ConsoleWrapper = new InMemoryConsole();
             _renderer = new ConsoleScreenRenderer(_ConsoleWrapper);
         }
+
         [Fact]
         public void WhenRenderingGameBoard_ThenRenderYAxisLabels()
         {
@@ -40,8 +41,28 @@ namespace SE.MineField.Tests
             _renderer.DrawBoard(board);
 
             _ConsoleWrapper.ConsoleOutput[0].Should().Be(" 1 2 3 4 5 6 7 8 9 10");
-
         }
 
+        [Fact]
+        public void WhenRenderingGameBoard_ThenRenderGameBoard()
+        {
+            var board = new GameBoard();
+            board.Board = new SquareType[2, 2];
+            board.Size = 2;
+            board.YLabels = new Dictionary<int, string>()
+            {
+                {1,"1"},
+                {2, "2"}
+            };
+            board.XLabels = new Dictionary<int, string>()
+            {
+                {1,"A"},
+                {2, "B"}
+            };
+            _renderer.DrawBoard(board);
+
+            _ConsoleWrapper.ConsoleOutput[1].Should().Be("A  O  O ");
+            _ConsoleWrapper.ConsoleOutput[2].Should().Be("B  O  O ");
+        }
     }
 }

@@ -8,10 +8,10 @@ namespace SE.MineField
 {
     public class GameBoard : IGameBoard
     {
-        public IEnumerable<string> Generate(int size)
+        public object[,] Generate(int size)
         {
             var collectionSize = size * size;
-            return new string[collectionSize].ToList();
+            return new object[size,size];
         }
     }
 }

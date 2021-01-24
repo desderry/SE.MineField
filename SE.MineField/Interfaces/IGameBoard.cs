@@ -7,6 +7,6 @@ namespace SE.MineField.Interfaces
     public interface IGameBoard
     {
 
-        public IEnumerable<string> Generate(int size);
+        public object[,] Generate(int size);
     }
 }

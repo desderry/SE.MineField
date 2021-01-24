@@ -9,17 +9,22 @@ namespace SE.MineField
 {
     public class GameBoard : IGameBoard
     {
+        private SquareType[,] _squares;
+
         public SquareType[,] Generate(int size)
         {
             if (size % 2 != 0)
             {
                 throw new ArgumentException("Odd numbers are not valid for board size");
             }
-            var squares = new SquareType[size, size];
-            return GenerateMines(squares, size);
+
+            _squares = new SquareType[size, size];
+            GenerateMines(size);
+
+            return _squares;
         }
 
-        private static SquareType[,] GenerateMines(SquareType[,] squares, int size)
+        private void GenerateMines(int size)
         {
 
             var noOfMines = size * size / 2;
@@ -30,15 +35,14 @@ namespace SE.MineField
                 var xPosition = rndIndex.Next(size - 1);
                 var yPosition = rndIndex.Next(size - 1);
 
-                var square = squares[xPosition, yPosition];
+                var square = _squares[xPosition, yPosition];
 
                 if (square == SquareType.Free)
                 {
-                    squares[xPosition, yPosition] = SquareType.Mine;
+                    _squares[xPosition, yPosition] = SquareType.Mine;
                     noOfMines--;
                 }
             }
-            return squares;
         }
     }
 }

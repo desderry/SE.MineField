@@ -9,9 +9,9 @@ namespace SE.MineField
 {
     public class GameBoard : IGameBoard
     {
-        public SquareType[,] Generate()
+        public SquareType[,] Generate(int size)
         {
-            return GenerateMines(new SquareType[4, 4]);
+            return GenerateMines(new SquareType[size, size]);
         }
 
         private static SquareType[,] GenerateMines(SquareType[,] squares)

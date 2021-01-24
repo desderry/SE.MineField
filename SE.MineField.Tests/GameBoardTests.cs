@@ -59,7 +59,7 @@ namespace SE.MineField.Tests
 
         [Theory]
         [InlineData(4, 8)]
-        [InlineData(6, 24)]
+        [InlineData(6, 18)]
         [InlineData(8, 32)]
         [InlineData(12, 72)]
 

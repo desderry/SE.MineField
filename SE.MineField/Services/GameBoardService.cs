@@ -30,6 +30,11 @@ namespace SE.MineField
             return _board;
         }
 
+        public bool IsValidSquare(in int playerXPosition, int playerYPosition)
+        {
+            throw new NotImplementedException();
+        }
+
         private SquareType[,] GenerateMines(int size)
         {
             var _squares = new SquareType[size, size];

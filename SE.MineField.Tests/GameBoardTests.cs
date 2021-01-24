@@ -59,6 +59,10 @@ namespace SE.MineField.Tests
 
         [Theory]
         [InlineData(4, 8)]
+        [InlineData(6, 24)]
+        [InlineData(8, 32)]
+        [InlineData(12, 72)]
+
         public void WhenGameboardIsGenerated_ThenHalfOfSquaresShouldBeMines(int size, int countOfMines)
         {
             var squaresList = _gameBoard.Generate(size);

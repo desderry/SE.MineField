@@ -19,6 +19,9 @@ namespace SE.MineField.Tests
 
         [Theory]
         [InlineData(4, 16)]
+        [InlineData(6, 36)]
+        [InlineData(12, 144)]
+
         public void WhenGameboardIsGenerated_ThenNumberOfSquaresGeneratedEqualsSquareOfSize(int size, int noOfSquares)
         {
             var squaresList = _gameBoard.Generate(size);
@@ -43,7 +46,10 @@ namespace SE.MineField.Tests
         [InlineData(4, 4, 2)]
         [InlineData(4, 4, 3)]
         [InlineData(4, 4, 4)]
-
+        [InlineData(6, 6, 6)]
+        [InlineData(12, 6, 12)]
+        [InlineData(12, 12, 6)]
+        [InlineData(12, 12, 12)]
         public void WhenGameBoardIsGenerated_ThenArrayIndexesMatchGridPosition(int size, int xPosition, int yPosition)
         {
             var squaresList = _gameBoard.Generate(size);

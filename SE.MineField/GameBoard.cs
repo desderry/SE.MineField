@@ -11,6 +11,10 @@ namespace SE.MineField
     {
         public SquareType[,] Generate(int size)
         {
+            if (size % 2 != 0)
+            {
+                throw new ArgumentException("Odd numbers are not valid for board size");
+            }
             var squares = new SquareType[size, size];
             return GenerateMines(squares, size);
         }

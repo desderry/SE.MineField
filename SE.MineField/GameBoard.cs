@@ -11,7 +11,18 @@ namespace SE.MineField
     {
         public SquareType[,] Generate()
         {
-            return new SquareType[4, 4];
+            var squares = new SquareType[4, 4];
+
+            squares[0, 1] = SquareType.Mine;
+            squares[1, 1] = SquareType.Mine;
+            squares[1, 3] = SquareType.Mine;
+            squares[2, 2] = SquareType.Mine;
+            squares[2, 0] = SquareType.Mine;
+            squares[3, 0] = SquareType.Mine;
+            squares[3, 2] = SquareType.Mine;
+            squares[3, 3] = SquareType.Mine;
+            
+            return squares;
         }
     }
 }

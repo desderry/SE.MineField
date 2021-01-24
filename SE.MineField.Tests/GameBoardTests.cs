@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using SE.MineField.Enums;
@@ -14,7 +15,7 @@ namespace SE.MineField.Tests
 
         public GameBoardTests()
         {
-            _gameBoard = new GameBoard();
+            _gameBoard = new GameBoardService();
         }
 
         [Theory]
@@ -35,9 +36,9 @@ namespace SE.MineField.Tests
 
         public void WhenGameboardIsGenerated_ThenNumberOfSquaresGeneratedEqualsSquareOfSize(int size, int noOfSquares)
         {
-            var squaresList = _gameBoard.Generate(size);
+            var board = _gameBoard.Generate(size);
 
-            squaresList.Should().HaveCount(noOfSquares);
+            board.Board.Should().HaveCount(noOfSquares);
         }
 
 
@@ -64,9 +65,9 @@ namespace SE.MineField.Tests
         [InlineData(12, 12, 12)]
         public void WhenGameBoardIsGenerated_ThenArrayIndexesMatchGridPosition(int size, int xPosition, int yPosition)
         {
-            var squaresList = _gameBoard.Generate(size);
+            var board = _gameBoard.Generate(size);
 
-            squaresList[xPosition - 1, yPosition - 1].Should().BeOfType<SquareType>();
+            board.Board[xPosition - 1, yPosition - 1].Should().BeOfType<SquareType>();
         }
 
         [Theory]
@@ -77,9 +78,47 @@ namespace SE.MineField.Tests
 
         public void WhenGameboardIsGenerated_ThenHalfOfSquaresShouldBeMines(int size, int countOfMines)
         {
-            var squaresList = _gameBoard.Generate(size);
+            var board = _gameBoard.Generate(size);
 
-            squaresList.ToList().Count(w => w == SquareType.Mine).Should().Be(countOfMines, "Half of the total number of squares should be mines");
+            board.Board.ToList().Count(w => w == SquareType.Mine).Should().Be(countOfMines, "Half of the total number of squares should be mines");
         }
+
+        [Theory]
+        [MemberData(nameof(GetYLabels))]
+        public void WhenGameboardIsGenerated_ThenYLabelsShouldBeGenerated(int size, Dictionary<int, string> labels)
+        {
+            var board = _gameBoard.Generate(size);
+
+            board.YLabels.Should().NotBeNull();
+            board.YLabels.Should().NotBeEmpty();
+            board.YLabels.Should().BeEquivalentTo(labels);
+
+        }
+        [Theory]
+        [MemberData(nameof(GetXLabels))]
+        public void WhenGameboardIsGenerated_ThenXLabelsShouldBeGenerated(int size, Dictionary<int, string> labels)
+        {
+            var board = _gameBoard.Generate(size);
+
+            board.XLabels.Should().NotBeNull();
+            board.XLabels.Should().NotBeEmpty();
+            board.XLabels.Should().BeEquivalentTo(labels);
+
+        }
+
+        public static IEnumerable<object[]> GetYLabels()
+        {
+            yield return new object[] { 4, new Dictionary<int, string>() { { 1, "1" }, { 2, "2" }, { 3, "3" }, { 4, "4" } } };
+            yield return new object[] { 6, new Dictionary<int, string>() { { 1, "1" }, { 2, "2" }, { 3, "3" }, { 4, "4" }, { 5, "5" }, { 6, "6" } } };
+
+        }
+
+        public static IEnumerable<object[]> GetXLabels()
+        {
+            yield return new object[] { 4, new Dictionary<int,string>(){ {1,"A"}, { 2, "B" }, { 3, "C" }, { 4, "D" } }  };
+            yield return new object[] { 6, new Dictionary<int, string>() { { 1, "A" }, { 2, "B" }, { 3, "C" }, { 4, "D" }, { 5, "E" }, { 6, "F" } } };
+
+        }
+
     }
 }

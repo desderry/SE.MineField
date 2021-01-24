@@ -18,6 +18,17 @@ namespace SE.MineField.Tests
         }
 
         [Theory]
+        [InlineData(3)]
+        [InlineData(5)]
+        [InlineData(11)]
+        public void WhenGameBoardIsGenerated_AndSizeIsOddNumber_ThenThrowArgumentException(int size)
+        {
+            Action act = () => _gameBoard.Generate(size);
+
+            act.Should().Throw<ArgumentException>();
+        }
+
+        [Theory]
         [InlineData(4, 16)]
         [InlineData(6, 36)]
         [InlineData(12, 144)]
@@ -28,6 +39,7 @@ namespace SE.MineField.Tests
 
             squaresList.Should().HaveCount(noOfSquares);
         }
+
 
         [Theory]
         [InlineData(4, 1, 1)]

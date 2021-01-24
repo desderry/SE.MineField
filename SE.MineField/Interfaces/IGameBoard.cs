@@ -8,7 +8,8 @@ namespace SE.MineField.Interfaces
 {
     public interface IGameBoard
     {
-
         public GameBoard Generate(int size);
+
+        bool IsValidSquare(in int playerXPosition, int playerYPosition);
     }
 }

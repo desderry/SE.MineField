@@ -32,7 +32,12 @@ namespace SE.MineField
 
         public bool IsValidSquare(in int playerXPosition, int playerYPosition)
         {
-            throw new NotImplementedException();
+            if (playerXPosition == 0 || playerYPosition == 0 || playerXPosition > _board.Size || playerYPosition > _board.Size)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private SquareType[,] GenerateMines(int size)

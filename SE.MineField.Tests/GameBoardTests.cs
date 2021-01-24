@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
+using System.Linq;
 using FluentAssertions;
+using SE.MineField.Enums;
 using SE.MineField.Interfaces;
 using Xunit;
 
@@ -40,11 +43,21 @@ namespace SE.MineField.Tests
         [InlineData(4, 3)]
         [InlineData(4, 4)]
 
-        public void WhenGameBoardIsGenerated_IndexShouldMatchGridPosition(int xPosition, int yPosition )
+        public void WhenGameBoardIsGenerated_ThenArrayIndexesMatchGridPosition(int xPosition, int yPosition )
         {
             var squaresList = _gameBoard.Generate(4);
 
             squaresList[xPosition - 1, yPosition - 1].Should().BeNull();
+        }
+
+        [Fact]
+        public void WhenGameboardIsGenerated_ThenHalfOfSquaresShouldBeMines()
+        {
+            var size = 4;
+            var countOfMines = size * size / 2;
+            var squaresList = _gameBoard.Generate(size);
+
+            squaresList.ToList().Count(w => w == SquareType.Mine).Should().Be(countOfMines, "Half of the total number of squares should be mines");
         }
     }
 }

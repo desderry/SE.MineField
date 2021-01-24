@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SE.MineField.Enums;
 
 namespace SE.MineField.Interfaces
 {
     public interface IGameBoard
     {
 
-        public object[,] Generate(int size);
+        public SquareType[,] Generate(int size);
     }
 }

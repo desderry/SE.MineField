@@ -20,7 +20,7 @@ namespace SE.MineField.Tests
         [Fact] 
         public void WhenGameboardIsGenerated_ThenNumberOfSquaresGeneratedEqualsSquareOfSize()
         {
-            var squaresList = _gameBoard.Generate(4);
+            var squaresList = _gameBoard.Generate();
 
             squaresList.Should().HaveCount(16);
         }
@@ -45,17 +45,16 @@ namespace SE.MineField.Tests
 
         public void WhenGameBoardIsGenerated_ThenArrayIndexesMatchGridPosition(int xPosition, int yPosition )
         {
-            var squaresList = _gameBoard.Generate(4);
+            var squaresList = _gameBoard.Generate();
 
-            squaresList[xPosition - 1, yPosition - 1].Should().BeNull();
+            squaresList[xPosition - 1, yPosition - 1].Should().BeOfType<SquareType>();
         }
 
-        [Fact]
-        public void WhenGameboardIsGenerated_ThenHalfOfSquaresShouldBeMines()
+        [Theory]
+        [InlineData(8)]
+        public void WhenGameboardIsGenerated_ThenHalfOfSquaresShouldBeMines(int countOfMines)
         {
-            var size = 4;
-            var countOfMines = size * size / 2;
-            var squaresList = _gameBoard.Generate(size);
+            var squaresList = _gameBoard.Generate();
 
             squaresList.ToList().Count(w => w == SquareType.Mine).Should().Be(countOfMines, "Half of the total number of squares should be mines");
         }

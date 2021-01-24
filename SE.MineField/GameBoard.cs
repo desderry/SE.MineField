@@ -9,10 +9,9 @@ namespace SE.MineField
 {
     public class GameBoard : IGameBoard
     {
-        public SquareType[,] Generate(int size)
+        public SquareType[,] Generate()
         {
-            var collectionSize = size * size;
-            return new SquareType[size,size];
+            return new SquareType[4, 4];
         }
     }
 }

@@ -7,5 +7,11 @@ namespace SE.MineField.Interfaces
     public interface IConsoleWrapper
     {
         void WriteLine(string line);
+
+        void Write(string content, ConsoleColor color = ConsoleColor.White);
+
+        ConsoleKeyInfo ReadKey();
+
+        void Clear();
     }
 }

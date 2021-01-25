@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using SE.MineField.Enums;
@@ -8,7 +9,7 @@ using SE.MineField.Models;
 
 namespace SE.MineField
 {
-    public class GameBoardService : IGameBoard
+    public class GameBoardServiceService : IGameBoardService
     {
         private GameBoard _board;
 
@@ -30,9 +31,9 @@ namespace SE.MineField
             return _board;
         }
 
-        public bool IsValidSquare(in int playerXPosition, int playerYPosition)
+        public bool IsValidSquare(int xPosition, int yPosition)
         {
-            if (playerXPosition == 0 || playerYPosition == 0 || playerXPosition > _board.Size || playerYPosition > _board.Size)
+            if (xPosition < 0 || yPosition < 0 || xPosition >= _board.Size || yPosition >= _board.Size)
             {
                 return false;
             }
@@ -40,17 +41,22 @@ namespace SE.MineField
             return true;
         }
 
+        public bool IsMine(int xPosition, int yPosition)
+        {
+            return _board.Board[xPosition, yPosition] == SquareType.Mine;
+        }
+
         private SquareType[,] GenerateMines(int size)
         {
             var _squares = new SquareType[size, size];
 
-            var noOfMines = size * size / 2;
+            var noOfMines = size * size / 3;
             var rndIndex = new Random(noOfMines);
 
             while (noOfMines != 0)
             {
-                var xPosition = rndIndex.Next(size - 1);
-                var yPosition = rndIndex.Next(size - 1);
+                var xPosition = rndIndex.Next(size);
+                var yPosition = rndIndex.Next(size);
 
                 var square = _squares[xPosition, yPosition];
 

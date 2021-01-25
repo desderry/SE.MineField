@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using SE.MineField.Enums;
-using SE.MineField.Models;
 
-namespace SE.MineField.Interfaces
+namespace SE.MineField.Models
 {
     public interface IGameBoard
     {
-        public GameBoard Generate(int size);
-
-        bool IsValidSquare(in int playerXPosition, int playerYPosition);
+        SquareType[,] Board { get; set; }
+        int Size { get; set; }
+        Dictionary<int, string> YLabels { get; set; }
+        Dictionary<int, string> XLabels { get; set; }
     }
 }

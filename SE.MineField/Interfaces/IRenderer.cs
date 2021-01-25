@@ -4,6 +4,12 @@ namespace SE.MineField.Interfaces
 {
     public interface IRenderer
     {
-        void DrawBoard(GameBoard board);
+        void DrawBoard(IGameBoard board, IPlayer player);
+
+        void DrawLives(IPlayer player);
+
+        void DrawScore(IPlayer player);
+
+        void DrawWinner(IPlayer player);
     }
 }

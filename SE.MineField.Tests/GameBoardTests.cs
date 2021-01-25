@@ -11,11 +11,11 @@ namespace SE.MineField.Tests
 {
     public class GameBoardTests
     {
-        private IGameBoard _gameBoard;
+        private IGameBoardService _gameBoardService;
 
         public GameBoardTests()
         {
-            _gameBoard = new GameBoardService();
+            _gameBoardService = new GameBoardServiceService();
         }
 
         [Theory]
@@ -24,7 +24,7 @@ namespace SE.MineField.Tests
         [InlineData(11)]
         public void WhenGameBoardIsGenerated_AndSizeIsOddNumber_ThenThrowArgumentException(int size)
         {
-            Action act = () => _gameBoard.Generate(size);
+            Action act = () => _gameBoardService.Generate(size);
 
             act.Should().Throw<ArgumentException>();
         }
@@ -35,7 +35,7 @@ namespace SE.MineField.Tests
         [InlineData(12, 144)]
         public void WhenGameboardIsGenerated_ThenNumberOfSquaresGeneratedEqualsSquareOfSize(int size, int noOfSquares)
         {
-            var board = _gameBoard.Generate(size);
+            var board = _gameBoardService.Generate(size);
 
             board.Board.Should().HaveCount(noOfSquares);
         }
@@ -63,28 +63,28 @@ namespace SE.MineField.Tests
         [InlineData(12, 12, 12)]
         public void WhenGameBoardIsGenerated_ThenArrayIndexesMatchGridPosition(int size, int xPosition, int yPosition)
         {
-            var board = _gameBoard.Generate(size);
+            var board = _gameBoardService.Generate(size);
 
             board.Board[xPosition - 1, yPosition - 1].Should().BeOfType<SquareType>();
         }
 
         [Theory]
-        [InlineData(4, 8)]
-        [InlineData(6, 18)]
-        [InlineData(8, 32)]
-        [InlineData(12, 72)]
-        public void WhenGameboardIsGenerated_ThenHalfOfSquaresShouldBeMines(int size, int countOfMines)
+        [InlineData(4, 5)]
+        [InlineData(6, 12)]
+        [InlineData(8, 21)]
+        [InlineData(12, 48)]
+        public void WhenGameboardIsGenerated_ThenShouldBecountOfMines(int size, int countOfMines)
         {
-            var board = _gameBoard.Generate(size);
+            var board = _gameBoardService.Generate(size);
 
-            board.Board.ToList().Count(w => w == SquareType.Mine).Should().Be(countOfMines, "Half of the total number of squares should be mines");
+            board.Board.ToList().Count(w => w == SquareType.Mine).Should().Be(countOfMines, "a third of the total number of squares should be mines");
         }
 
         [Theory]
         [MemberData(nameof(GetYLabels))]
         public void WhenGameboardIsGenerated_ThenYLabelsShouldBeGenerated(int size, Dictionary<int, string> labels)
         {
-            var board = _gameBoard.Generate(size);
+            var board = _gameBoardService.Generate(size);
 
             board.YLabels.Should().NotBeNull();
             board.YLabels.Should().NotBeEmpty();
@@ -95,7 +95,7 @@ namespace SE.MineField.Tests
         [MemberData(nameof(GetXLabels))]
         public void WhenGameboardIsGenerated_ThenXLabelsShouldBeGenerated(int size, Dictionary<int, string> labels)
         {
-            var board = _gameBoard.Generate(size);
+            var board = _gameBoardService.Generate(size);
 
             board.XLabels.Should().NotBeNull();
             board.XLabels.Should().NotBeEmpty();
@@ -125,9 +125,9 @@ namespace SE.MineField.Tests
         [InlineData(4, 4, 1)]
         public void WhenPositionIsValidated_AndSquareExists_ThenReturnTrue(int size, int xPos, int yPos)
         {
-            _gameBoard.Generate(size);
+            _gameBoardService.Generate(size);
 
-            var valid = _gameBoard.IsValidSquare(xPos, yPos);
+            var valid = _gameBoardService.IsValidSquare(xPos, yPos);
 
             valid.Should().BeTrue();
         }
@@ -139,9 +139,9 @@ namespace SE.MineField.Tests
         [InlineData(4, 5, 1)]
         public void WhenPositionIsValidated_AndSquareDoesnt_ThenReturnFalse(int size, int xPos, int yPos)
         {
-            _gameBoard.Generate(size);
+            _gameBoardService.Generate(size);
 
-            var valid = _gameBoard.IsValidSquare(xPos, yPos);
+            var valid = _gameBoardService.IsValidSquare(xPos, yPos);
 
             valid.Should().BeFalse();
         }

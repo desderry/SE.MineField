@@ -12,9 +12,20 @@ namespace SE.MineField.Interfaces
             Console.WriteLine(line);
         }
 
+        public void Write(string content, ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(content, Console.ForegroundColor);
+        }
+
         public ConsoleKeyInfo ReadKey()
         {
             return Console.ReadKey();
+        }
+
+        public void Clear()
+        {
+            Console.Clear();
         }
     }
 }

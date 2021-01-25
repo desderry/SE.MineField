@@ -2,7 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SE.MineField.Enums;
 using SE.MineField.Interfaces;
+using SE.MineField.Models;
 
 namespace SE.MineField
 {
@@ -13,10 +15,11 @@ namespace SE.MineField
             //setup our DI
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
-                .AddTransient<IGameBoard, GameBoardService>()
+                .AddTransient<IGameBoardService, GameBoardServiceService>()
                 .AddTransient<IRenderer, ConsoleScreenRenderer>()
                 .AddTransient<IConsoleWrapper, ConsoleWrapper>()
                 .AddTransient<IGameEngine, GameEngine>()
+                .AddTransient<IPlayer, Player>()
                 .BuildServiceProvider();
 
             var logger = serviceProvider.GetService<ILoggerFactory>()
@@ -27,12 +30,11 @@ namespace SE.MineField
             var gameEngine = serviceProvider.GetService<IGameEngine>();
 
             gameEngine.Start();
-        }
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((_, services) =>
-                    services.AddTransient<IGameBoard, GameBoardService>()
-                        .AddTransient<IRenderer, ConsoleScreenRenderer>());
+            while (gameEngine.Status == GameStatus.InProgress)
+            {
+                gameEngine.PlayerMoves(Console.ReadKey().Key);
+            }
+        }
     }
 }

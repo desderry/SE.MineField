@@ -5,7 +5,7 @@ using SE.MineField.Enums;
 
 namespace SE.MineField.Models
 {
-    public class GameBoard
+    public class GameBoard : IGameBoard
     {
         public SquareType[,] Board { get; set; }
         public int Size { get; set; }

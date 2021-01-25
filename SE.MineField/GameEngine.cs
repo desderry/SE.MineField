@@ -9,15 +9,15 @@ namespace SE.MineField
 {
     public class GameEngine : IGameEngine
     {
-        private IGameBoardService _gameBoardService;
+        private IGameBoard _gameBoard;
         private IRenderer _renderer;
         private IConsoleWrapper _consoleWrapper;
         private IPlayer _player;
         private GameBoard _board;
 
-        public GameEngine(IGameBoardService gameBoardService, IRenderer renderer, IConsoleWrapper consoleWrapper, IPlayer player)
+        public GameEngine(IGameBoard gameBoard, IRenderer renderer, IConsoleWrapper consoleWrapper, IPlayer player)
         {
-            _gameBoardService = gameBoardService;
+            _gameBoard = gameBoard;
             _renderer = renderer;
             _consoleWrapper = consoleWrapper;
             _player = player;
@@ -26,7 +26,7 @@ namespace SE.MineField
         public void Start()
         {
             var boardSize = 16;
-            _board = _gameBoardService.Generate(boardSize);
+            _board = _gameBoard.Generate(boardSize);
 
             SetPlayerStartPosition(boardSize);
             RenderGame();
@@ -80,7 +80,7 @@ namespace SE.MineField
 
         private void CalculateMineHitorMiss()
         {
-            if (_gameBoardService.IsMine(_player.XPosition, _player.YPosition))
+            if (_gameBoard.IsMine(_player.XPosition, _player.YPosition))
             {
                 _player.HitMine();
             }
@@ -124,7 +124,7 @@ namespace SE.MineField
 
         private void MovePlayer(int xPosition, int yPosition)
         {
-            if (_gameBoardService.IsValidSquare(xPosition, yPosition))
+            if (_gameBoard.IsValidSquare(xPosition, yPosition))
             {
                 _player.SetPosition(xPosition, yPosition);
 

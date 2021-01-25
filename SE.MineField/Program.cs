@@ -15,7 +15,7 @@ namespace SE.MineField
             //setup our DI
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
-                .AddTransient<IGameBoardService, GameBoardServiceService>()
+                .AddTransient<IGameBoard, GameBoard>()
                 .AddTransient<IRenderer, ConsoleScreenRenderer>()
                 .AddTransient<IConsoleWrapper, ConsoleWrapper>()
                 .AddTransient<IGameEngine, GameEngine>()

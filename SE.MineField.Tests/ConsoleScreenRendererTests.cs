@@ -74,7 +74,7 @@ namespace SE.MineField.Tests
             var player = new Player();
             _renderer.DrawBoard(_gameboardMock.Object, player);
 
-            _ConsoleWrapper.ConsoleOutput[0].Should().Be(" 1 2 3 4 5 6 7 8 9 10");
+            _ConsoleWrapper.ConsoleOutput[0].Should().Be("   1  2  3  4  5  6  7  8  9  10");
         }
 
         [Fact]

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
 using SE.MineField.Enums;
-using SE.MineField.Interfaces;
 using SE.MineField.Models;
 
 namespace SE.MineField
 {
-    public class GameBoardServiceService : IGameBoardService
+    public class GameBoard : IGameBoard
     {
+        public SquareType[,] Board { get; set; }
+        public int Size { get; set; }
+        public Dictionary<int, string> YLabels { get; set; }
+        public Dictionary<int, string> XLabels { get; set; }
+
         private GameBoard _board;
 
         public GameBoard Generate(int size)

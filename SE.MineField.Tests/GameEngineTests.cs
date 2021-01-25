@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Moq;
 using SE.MineField.Interfaces;
@@ -10,7 +11,7 @@ namespace SE.MineField.Tests
 {
     public class GameEngineTests
     {
-        private Mock<IGameBoardService> _gameBoardMock;
+        private Mock<IGameBoard> _gameBoardMock;
         private Mock<IRenderer> _rendererMock;
         private Mock<IPlayer> _playerMock;
         private InMemoryConsole _consoleWrapper;
@@ -19,7 +20,7 @@ namespace SE.MineField.Tests
 
         public GameEngineTests()
         {
-            _gameBoardMock = new Mock<IGameBoardService>();
+            _gameBoardMock = new Mock<IGameBoard>();
             _rendererMock = new Mock<IRenderer>();
             _consoleWrapper = new InMemoryConsole();
             _playerMock = new Mock<IPlayer>();
@@ -47,7 +48,7 @@ namespace SE.MineField.Tests
         {
             _gameEngine.Start();
 
-            _gameBoardMock.Verify(v => v.Generate(12), Times.Once);
+            _gameBoardMock.Verify(v => v.Generate(16), Times.Once);
         }
 
         [Fact]
@@ -55,7 +56,7 @@ namespace SE.MineField.Tests
         {
             _gameEngine.Start();
 
-            _rendererMock.Verify(v => v.DrawBoard(It.IsAny<GameBoard>(), It.IsAny<Player>()), Times.Once);
+            _rendererMock.Verify(v => v.DrawBoard(It.IsAny<IGameBoard>(), It.IsAny<IPlayer>()), Times.Once);
         }
 
         [Fact]
@@ -63,7 +64,7 @@ namespace SE.MineField.Tests
         {
             _gameEngine.Start();
 
-            _rendererMock.Verify(v => v.DrawLives(It.IsAny<Player>()), Times.Once);
+            _rendererMock.Verify(v => v.DrawLives(It.IsAny<IPlayer>()), Times.Once);
         }
 
         [Fact]
@@ -71,7 +72,7 @@ namespace SE.MineField.Tests
         {
             _gameEngine.Start();
 
-            _rendererMock.Verify(v => v.DrawScore(It.IsAny<Player>()), Times.Once);
+            _rendererMock.Verify(v => v.DrawScore(It.IsAny<IPlayer>()), Times.Once);
         }
 
         [Theory]
@@ -162,7 +163,7 @@ namespace SE.MineField.Tests
             _gameEngine.Start();
             _gameEngine.PlayerMoves(input);
 
-            _rendererMock.Verify(v => v.DrawBoard(It.IsAny<IGameBoard>(), It.IsAny<IPlayer>()), Times.Once);
+            _rendererMock.Verify(v => v.DrawBoard(It.IsAny<IGameBoard>(), It.IsAny<IPlayer>()), Times.Exactly(2));
         }
 
         [Theory]
@@ -178,7 +179,7 @@ namespace SE.MineField.Tests
             _gameEngine.Start();
             _gameEngine.PlayerMoves(input);
 
-            _rendererMock.Verify(v => v.DrawLives(It.IsAny<IPlayer>()), Times.Once);
+            _rendererMock.Verify(v => v.DrawLives(It.IsAny<IPlayer>()), Times.Exactly(2));
         }
 
         [Theory]
@@ -194,7 +195,7 @@ namespace SE.MineField.Tests
             _gameEngine.Start();
             _gameEngine.PlayerMoves(input);
 
-            _rendererMock.Verify(v => v.DrawScore(It.IsAny<IPlayer>()), Times.Once);
+            _rendererMock.Verify(v => v.DrawScore(It.IsAny<IPlayer>()), Times.Exactly(2));
         }
 
         [Theory]
@@ -210,7 +211,7 @@ namespace SE.MineField.Tests
             _gameEngine.Start();
             _gameEngine.PlayerMoves(input);
 
-            _rendererMock.Verify(v => v.DrawWinner(It.IsAny<IPlayer>()), Times.AtLeast(1));
+            _rendererMock.Verify(v => v.DrawWinner(It.IsAny<IPlayer>()), Times.Exactly(2));
         }
     }
 }
